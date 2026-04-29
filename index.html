@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Usagi Pomodoro</title>
     <link href="styles.css" rel="stylesheet" />
+	<link rel="icon" type="image/png" href="base.png" />
   </head>
   <body>
     <div class="container">
-      <img class="usagi-image" id="base" src="/base.png" />
-      <img class="usagi-image" id="eyes" src="/eyes.png" />
+      <img class="usagi-image" id="base" src="base.png" />
+      <img class="usagi-image" id="eyes" src="eyes.png" />
       <div class="session-info">
         <span id="session-label">Work</span>
         <div class="pomodoro-dots">
@@ -72,7 +73,7 @@
       <button id="settings-close">Cancel ✗</button>
     </div>
 
-    <script src="/pomdoro.js"></script>
+    <script src="pomdoro.js"></script>
     <script>
       const base = document.querySelector("#base");
       const container = document.querySelector(".container");
