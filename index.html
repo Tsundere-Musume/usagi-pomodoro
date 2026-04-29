@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Usagi Pomodoro</title>
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <img class="usagi-image" id="base" src="/base.png" />
+      <img class="usagi-image" id="eyes" src="/eyes.png" />
+      <div class="session-info">
+        <span id="session-label">Work</span>
+        <div class="pomodoro-dots">
+          <span class="dot" id="dot-0"></span>
+          <span class="dot" id="dot-1"></span>
+          <span class="dot" id="dot-2"></span>
+          <span class="dot" id="dot-3"></span>
+        </div>
+      </div>
+      <div id="timer-display">25:00</div>
+
+      <div class="btn-row">
+        <button id="start-btn">Start</button>
+        <button id="reset-btn">Reset</button>
+        <button id="settings-btn">⚙</button>
+      </div>
+    </div>
+
+    <div id="settings-overlay"></div>
+    <div id="settings-panel">
+      <h2 class="settings-title">Settings</h2>
+
+      <label class="settings-label">
+        Work Time <span class="settings-unit">(min)</span>
+        <input
+          class="settings-input"
+          id="input-work"
+          type="number"
+          min="1"
+          max="99"
+          value="25"
+        />
+      </label>
+
+      <label class="settings-label">
+        Short Break <span class="settings-unit">(min)</span>
+        <input
+          class="settings-input"
+          id="input-break"
+          type="number"
+          min="1"
+          max="99"
+          value="5"
+        />
+      </label>
+
+      <label class="settings-label">
+        Long Break <span class="settings-unit">(min)</span>
+        <input
+          class="settings-input"
+          id="input-long"
+          type="number"
+          min="1"
+          max="99"
+          value="15"
+        />
+      </label>
+
+      <button id="settings-apply">Apply ✓</button>
+      <button id="settings-close">Cancel ✗</button>
+    </div>
+
+    <script src="/pomdoro.js"></script>
+    <script>
+      const base = document.querySelector("#base");
+      const container = document.querySelector(".container");
+
+      function positionUsagi() {
+        container.style.marginTop = base.offsetHeight * 0.95 + "px";
+      }
+
+      window.addEventListener("resize", positionUsagi);
+      base.addEventListener("load", positionUsagi);
+
+      if (base.complete) positionUsagi();
+
+      document.addEventListener("mousemove", (e) => {
+        const rect = base.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+
+        const angle = Math.atan2(dy, dx);
+
+        // Clamp how far the eyes can move (in px)
+        const maxShift = 8;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const scale = 0.0085 * rect.width;
+
+        const shiftX = Math.cos(angle) * scale;
+        const shiftY = Math.sin(angle) * scale;
+
+        eyes.style.transform = `translateY(-90%) translate(${shiftX}px, ${shiftY}px)`;
+      });
+    </script>
+  </body>
+</html>

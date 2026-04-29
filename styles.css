@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=DM+Mono:wght@500&display=swap');
+
+.container {
+	position: relative;
+	margin-top: 30%;
+	display: block;
+	border-radius: 30px;
+	min-width: 360px;
+	padding: 40px 48px;
+	background: #fff8f8;
+	border: 2px solid #f0c8d4;
+	border-radius: 32px;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+	padding-top: calc(95% * (height / width));
+	/* e.g. 95% * 1.2 for a tall image */
+}
+
+
+@media (max-width: 768px) {
+	.container {
+		width: 75%;
+	}
+}
+
+#base,
+#eyes {
+	position: absolute;
+	left: 20%;
+	width: 70%;
+	z-index: 1;
+	transform: translateY(-90%);
+}
+
+.btn-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 10px;
+}
+
+#timer-display {
+	padding: 20px;
+}
+
+body {
+	background-color: #D5E8F5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+body {
+	background-image: url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1920&q=80");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.container {
+	/* your existing styles... */
+	background: rgba(255, 248, 248, 0.75);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Timer display ── */
+#timer-display {
+	font-family: 'DM Mono', monospace;
+	font-size: clamp(3rem, 10vw, 5rem);
+	font-weight: 500;
+	color: #5a3a4a;
+	letter-spacing: 0.06em;
+
+	background: #fff;
+	border: 2px solid #f0c8d4;
+	border-radius: 24px;
+	padding: 18px 40px;
+	margin: 12px auto;
+
+	width: fit-content;
+	line-height: 1;
+	user-select: none;
+	transition: color 0.3s, border-color 0.3s;
+}
+
+/* Subtle pulse when timer is running — toggled via JS */
+#timer-display.running {
+	border-color: #e08090;
+	color: #c9485a;
+}
+
+/* ── Shared button base ── */
+.container button {
+	font-family: 'Nunito', sans-serif;
+	font-weight: 800;
+	font-size: 0.9rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+
+	border: 2px solid transparent;
+	border-radius: 50px;
+	padding: 12px 28px;
+	cursor: pointer;
+	transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+		background 0.2s, border-color 0.2s, color 0.2s;
+	outline: none;
+}
+
+.container button:hover {
+	transform: scale(1.05);
+}
+
+.container button:active {
+	transform: scale(0.95);
+}
+
+/* ── Start / Pause button ── */
+#start-btn {
+	background: #e08090;
+	color: #fff;
+	min-width: 120px;
+}
+
+#start-btn:hover {
+	background: #d06878;
+}
+
+/* paused state — toggled via JS */
+#start-btn.paused {
+	background: #fff;
+	color: #e08090;
+	border-color: #e08090;
+}
+
+/* ── Reset button ── */
+#reset-btn {
+	background: #f5e8ec;
+	color: #c97a8a;
+	border-color: #f0c8d4;
+}
+
+#reset-btn:hover {
+	background: #f0d8e4;
+	border-color: #e0a8bc;
+}
+
+/* ── Settings button ── */
+#settings-btn {
+	background: transparent;
+	color: #b89aaa;
+	border-color: #f0c8d4;
+	padding: 12px 18px;
+	font-size: 1.1rem;
+}
+
+#settings-btn:hover {
+	background: #f5e8ec;
+	color: #c97a8a;
+}
+
+/* ── Settings overlay ── */
+#settings-overlay {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.25);
+	backdrop-filter: blur(3px);
+	z-index: 10;
+}
+
+/* ── Settings panel ── */
+#settings-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: 280px;
+	padding: 36px 28px;
+	background: #fff8f8;
+	box-shadow: -6px 0 32px rgba(0, 0, 0, 0.12);
+	border-radius: 24px 0 0 24px;
+	transform: translateX(110%);
+	transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+	z-index: 11;
+}
+
+#settings-panel.open {
+	transform: translateX(0);
+}
+
+#settings-overlay.open {
+	display: block;
+}
+
+.settings-title {
+	font-size: 1.3rem;
+	font-weight: 700;
+	color: #c97a8a;
+	margin: 0 0 8px;
+	letter-spacing: 0.04em;
+}
+
+.settings-label {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #7a5c6e;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.settings-unit {
+	font-weight: 400;
+	color: #b89aaa;
+	text-transform: none;
+}
+
+.settings-input {
+	padding: 10px 14px;
+	border: 2px solid #f0c8d4;
+	border-radius: 12px;
+	font-size: 1rem;
+	color: #5a3a4a;
+	background: #fff;
+	outline: none;
+	transition: border-color 0.2s;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.settings-input:focus {
+	border-color: #e08090;
+}
+
+#settings-apply,
+#settings-close {
+	padding: 11px;
+	border: none;
+	border-radius: 14px;
+	font-size: 0.9rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: transform 0.15s, opacity 0.15s;
+	letter-spacing: 0.04em;
+}
+
+#settings-apply {
+	background: #e08090;
+	color: #fff;
+}
+
+#settings-close {
+	background: #f5e8ec;
+	color: #c97a8a;
+}
+
+#settings-apply:hover,
+#settings-close:hover {
+	opacity: 0.85;
+	transform: scale(0.97);
+}
+
+#settings-btn {
+	/* inherits your existing button styles — tweak to match */
+	font-size: 1.1rem;
+}
+
+.session-info {
+	margin-top: 12%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+#session-label {
+	font-family: 'Nunito', sans-serif;
+	font-size: 0.85rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: #b89aaa;
+}
+
+.pomodoro-dots {
+	display: flex;
+	gap: 8px;
+}
+
+.dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #f0c8d4;
+	transition: background 0.3s;
+}
+
+.dot.filled {
+	background: #e08090;
+}
